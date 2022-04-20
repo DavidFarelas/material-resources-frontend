@@ -1,0 +1,25 @@
+{
+  "short_name": "Recursos Materiales",
+  "name": "Aplicación de Recursos Materiales para UPIITA-IPN",
+  "icons": [
+    {
+      "src": "IPN.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "IPN.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "IPN.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
