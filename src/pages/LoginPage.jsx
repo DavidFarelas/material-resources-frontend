@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useFormik } from "formik";
 
 import { Button, Card, Container, Form } from "react-bootstrap";
 
@@ -7,12 +6,7 @@ import { useDispatch } from "react-redux";
 import { startLoginAction } from "../redux/usersDuck";
 
 const LoginPage = () => {
-  /*const [userData, setUserData] = useState({
-    username: "",
-    password: "",
-  });*/
-
-  const formik = useFormik({
+  const [userData, setUserData] = useState({
     username: "",
     password: "",
   });
