@@ -4,8 +4,8 @@ import logo from "../../IPN.png";
 const NoLoginNav = () => {
   return (
     <>
-      <Navbar bg="dark" variant="dark">
-        <Container>
+      <Navbar variant="dark" style={{ backgroundColor: "#66023C" }}>
+        <Container className="text-center">
           <Navbar.Brand href="#home">
             <img
               alt=""
