@@ -15,11 +15,25 @@ export const chooseMsg = (error) => {
         Swal.fire({
           icon: 'error',
           title: 'Ocurrió un error',
-          text: 'Usuario no encontrado',
+          text: 'Usuario incorrecto',
+        })
+      )
+    case undefined:
+      return (
+        Swal.fire({
+          icon: 'error',
+          title: 'Ocurrió un error',
+          text: 'ocurrió un error inesperado',
         })
       )
     default:
-      break;
+      return(
+        Swal.fire({
+          icon: 'error',
+          title: 'Ocurrió un error',
+          text: 'Todos los campos son obligatorios',
+        })
+      )
   }
 
 }

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useFormik } from "formik";
 
 import { Button, Card, Container, Form } from "react-bootstrap";
 
@@ -6,25 +7,28 @@ import { useDispatch } from "react-redux";
 import { startLoginAction } from "../redux/usersDuck";
 
 const LoginPage = () => {
-  const [userData, setUserData] = useState({
-    username: "",
-    password: "",
-  });
-
+  const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
 
-  const dispatch = useDispatch();
-  const handleUserData = (e) => {
-    setUserData({
-      ...userData,
-      [e.target.id]: e.target.value,
-    });
+  const validate = (values) => {
+    if (values.username && values.password) {
+      setToggle(true);
+    } else {
+      setToggle(false);
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(startLoginAction(userData));
-  };
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validate,
+    onSubmit: (data) => {
+      dispatch(startLoginAction(data));
+      setToggle(false);
+    },
+  });
 
   return (
     <>
@@ -38,7 +42,7 @@ const LoginPage = () => {
                 <Form.Control
                   type="text"
                   placeholder="Ingrese su nombre de usuario"
-                  onChange={handleUserData}
+                  onChange={formik.handleChange}
                 />
               </Form.Group>
 
@@ -47,7 +51,7 @@ const LoginPage = () => {
                 <Form.Control
                   type="password"
                   placeholder="Contraseña"
-                  onChange={handleUserData}
+                  onChange={formik.handleChange}
                 />
               </Form.Group>
               <div className="d-grid gap-2">
@@ -56,7 +60,7 @@ const LoginPage = () => {
                     variant="primary"
                     size="lg"
                     type="submit"
-                    onClick={handleSubmit}
+                    onClick={formik.handleSubmit}
                   >
                     INICIAR SESIÓN
                   </Button>
@@ -65,7 +69,7 @@ const LoginPage = () => {
                     variant="primary"
                     size="lg"
                     type="submit"
-                    onClick={handleSubmit}
+                    onClick={formik.handleSubmit}
                     disabled
                   >
                     INICIAR SESIÓN

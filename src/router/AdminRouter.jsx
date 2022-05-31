@@ -12,12 +12,14 @@ const AdminRouter = () => {
   }
   return (
     <>
-      <Routes>
-        <Route
-          path="/"
-          element={<PrivateRoutes Component={CRUDusers} role={role} />}
-        />
-      </Routes>
+      <div className="my-3 mx-5">
+        <Routes>
+          <Route
+            path="/"
+            element={<PrivateRoutes Component={CRUDusers} role={role} />}
+          />
+        </Routes>
+      </div>
     </>
   );
 };

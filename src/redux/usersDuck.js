@@ -28,7 +28,6 @@ export const usersReducer = (state = initialData, action) => {
       };
     case LOGIN_SUCCESS:
       return {
-        ...state,
         loggedIn: true,
         fetching: false,
         name: action.payload.name,
@@ -39,16 +38,11 @@ export const usersReducer = (state = initialData, action) => {
       };
     case LOGIN_FAILURE:
       return {
-        ...state,
         loggedIn: false,
         fetching: false,
       };
     case LOGOUT:
-      return {
-        ...state,
-        loggedIn: false,
-        fetching: false,
-      };
+      return { ...initialData };
     default:
       return state;
   }
@@ -70,7 +64,7 @@ export const startLoginAction = (data) => {
       })
       .catch((error) => {
         //console.log(error.response.data.statusCode); // para obtener el mensaje de error del servidor
-        chooseMsg(error.response.data.statusCode);
+        chooseMsg(error.response?.data.statusCode);
       });
   } 
 }
@@ -104,3 +98,10 @@ export const loginErrorAction = (message) => ({
     message: message,
   }
 })
+
+export const logoutAction = () => (dispatch) => {
+  dispatch({
+    type: LOGOUT,
+  });
+  localStorage.removeItem("userData");
+}
