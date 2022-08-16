@@ -3,36 +3,38 @@ import { useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { depa, role_desc } from "../../constants/Roles";
-import { startUpdateUserDataAction } from "../../redux/crudUsersDuck";
+import { startCreateUserAction } from "../../redux/crudUsersDuck";
 
-const EditModal = (props) => {
+const CreateUModal = (props) => {
   const dispatch = useDispatch();
-  const [toggle, setToggle] = useState(true);
-
-  const { data } = props;
-
+  const [toggle, setToggle] = useState(false);
   const validate = (values) => {
-    if (values.username && values.did !== 0 && values.cat !== 0) {
-      setToggle(true);
-    } else {
-      setToggle(false);
+    if (
+      values.username &&
+      values.password &&
+      values.did !== 0 &&
+      values.cat !== 0
+    ) {
+      if (values.password.length >= 8) {
+        setToggle(true);
+      }
     }
   };
 
   const formik = useFormik({
     initialValues: {
-      username: data.username,
-      did: data.departmentId,
-      cat: data.userCategoryId,
-      area: data.area,
+      username: "",
+      password: "",
+      did: 0,
+      cat: 0,
+      area: "",
     },
-    enableReinitialize: true,
     validate,
     onSubmit: (values, { resetForm }) => {
-      dispatch(startUpdateUserDataAction({ ...values, id: data.id }));
+      dispatch(startCreateUserAction(values));
       resetForm();
       props.onHide();
-      setToggle(true);
+      setToggle(false);
     },
   });
 
@@ -43,10 +45,9 @@ const EditModal = (props) => {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      {/*console.log(formik)*/}
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Editar Usuario
+          Crear usuario
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -59,7 +60,16 @@ const EditModal = (props) => {
                 placeholder="Ingrese Nombre de usuario"
                 name="username"
                 onChange={formik.handleChange}
-                value={formik.values.username || ""}
+              />
+            </Form.Group>
+
+            <Form.Group as={Col} controlId="formGridPassword">
+              <Form.Label>Contraseña</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Ingrese Contraseña"
+                name="password"
+                onChange={formik.handleChange}
               />
             </Form.Group>
           </Row>
@@ -68,7 +78,6 @@ const EditModal = (props) => {
             <Form.Label>Departamento</Form.Label>
             <Form.Select
               defaultValue={0}
-              value={formik.values.did}
               name="did"
               onChange={formik.handleChange}
             >
@@ -88,8 +97,8 @@ const EditModal = (props) => {
             onChange={formik.handleChange}
           >
             <Form.Label>Categoría</Form.Label>
-            <Form.Select defaultValue={0} value={formik.values.cat} name="cat">
-              <option value={0}>SELECCIONE UNA CATEGORÍA</option>
+            <Form.Select defaultValue={0} name="cat">
+              <option value={1}>SELECCIONE UNA CATEGORÍA</option>
               {role_desc.map((data) => (
                 <option value={data.id} key={data.id}>
                   {" "}
@@ -105,7 +114,6 @@ const EditModal = (props) => {
               placeholder="Telemática, Cálculo, etc."
               onChange={formik.handleChange}
               name="area"
-              value={formik.values.area || ""}
             />
           </Form.Group>
         </Form>
@@ -135,4 +143,4 @@ const EditModal = (props) => {
   );
 };
 
-export default EditModal;
+export default CreateUModal;

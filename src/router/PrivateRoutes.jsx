@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 
 const PrivateRoutes = ({ Component, role }) => {
+  console.log("Private Routes");
   const userData = localStorage.getItem("userData");
   let userDataJson;
   let loggedIn = false;

@@ -2,7 +2,7 @@ import axios from "axios";
 import { chooseMsg } from "../helpers/errorMsg";
 import saveUser from "../helpers/saveUser";
 
-/* REDUCERS */
+/* CONSTANTS */
 const headersR = {
   "Content-Type": "application/json",
 };
@@ -90,7 +90,7 @@ export const persistentLoginAction = (userData) => ({
       ucid: userData.ucid,
       token: userData.token,
     }
-  })
+})
 
 export const loginErrorAction = (message) => ({
   type: LOGIN_FAILURE,
